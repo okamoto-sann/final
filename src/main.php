@@ -9,27 +9,35 @@
 
     <?php
 
-            $image_url = 'img/timeis1$.png';
-            $api_credentials = array(
+        $file_path = 'img/timeis1$.png';
+        $api_credentials = array(
             'key' => 'acc_74a6eb256152071',
             'secret' => 'a35923a8ba84f2fe9e472bfe0d337977'
-            );
+        );
 
-            $ch = curl_init();
+        $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, 'https://api.imagga.com/v2/tags?image_url='.$image_url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            curl_setopt($ch, CURLOPT_HEADER, FALSE);
-            curl_setopt($ch, CURLOPT_USERPWD, $api_credentials['key'].':'.$api_credentials['secret']);
+        curl_setopt($ch, CURLOPT_URL, "https://api.imagga.com/v2/colors");
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        curl_setopt($ch, CURLOPT_USERPWD, $api_credentials['key'].':'.$api_credentials['secret']);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        $fields = [
+            'image' => new \CurlFile($file_path, 'image/jpeg', 'image.jpg'),
+            'language' => 'ja'
+        ];
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
 
-            $response = curl_exec($ch);
-            curl_close($ch);
+        $response = curl_exec($ch);
+        curl_close($ch);
 
-            $json_response = json_decode($response);
-            var_dump($json_response);
-
-
+        $json_response = json_decode($response);
+        var_dump($json_response);
         ?>
+        
 
     </body>
 </html>
