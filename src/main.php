@@ -27,7 +27,6 @@
         curl_setopt($ch, CURLOPT_POST, 1);
         $fields = [
             'image' => new \CurlFile($file_path, 'image/jpeg', 'image.jpg'),
-            'overall_count' => (2)
         ];
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
 
